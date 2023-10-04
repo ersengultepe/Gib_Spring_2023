@@ -1,5 +1,6 @@
 package com.works.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Customer {
     @Column(length = 150)
     private String email;
 
+    //@JsonIgnore
     @Size(min = 4, max = 500)
     @NotEmpty
     @NotNull
