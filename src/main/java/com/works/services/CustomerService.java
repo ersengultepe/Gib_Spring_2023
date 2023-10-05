@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -21,6 +22,7 @@ public class CustomerService {
 
     final CustomerRepository customerRepository;
     final ModelMapper modelMapperA;
+    final HttpServletRequest req;
 
     public ResponseEntity register(Customer customer) {
         Optional<Customer> optionalCustomer = customerRepository.findByEmailEqualsIgnoreCase(customer.getEmail());
@@ -40,8 +42,9 @@ public class CustomerService {
             //CustomerDto dto = new CustomerDto();
             //BeanUtils.copyProperties(customer, dto);
 
-            //CustomerDto dto = modelMapperA.map(customer, CustomerDto.class);
-            return Util.success(customer);
+            CustomerDto dto = modelMapperA.map(customer, CustomerDto.class);
+            req.getSession().setAttribute("user", dto);
+            return Util.success(dto);
         }
         return Util.fail("Email or Password Fail", HttpStatus.UNAUTHORIZED);
     }
