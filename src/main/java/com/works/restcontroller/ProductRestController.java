@@ -23,4 +23,9 @@ public class ProductRestController {
         return productService.list();
     }
 
+    @GetMapping("/single/{stPid}")
+    public ResponseEntity single( @PathVariable String stPid ) {
+      return productService.single(stPid);
+    }
+
 }
